@@ -1,0 +1,26 @@
+.flex-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    height: 3rem;
+    align-items: center;
+    background-color: ghostwhite;
+}
+
+.flex-large {
+
+}
+
+.link {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: black;
+    font-family: Arial;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.link:hover{
+    text-decoration: none;
+    color:grey;
+}
