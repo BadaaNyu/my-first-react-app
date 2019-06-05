@@ -1,23 +1,22 @@
 import React, {Component} from 'react';
 import './App.css';
-import 'primereact/resources/themes/nova-light/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
-import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 import Menu from "./components/Menu";
 import Home from "./components/Home";
 import Salons from "./components/Salons";
 import About from "./components/About";
 import TopLadder from "./components/TopLadder";
-import {Messages} from 'primereact/messages';
 
 
 class App extends Component {
 
 
     constructor(props, context) {
-        super(props);
+        super(props,context);
         this.setPseudo = this.setPseudo.bind(this);
+        this.setMessage = this.setMessage.bind(this);
+        this.getPseudo = this.getPseudo.bind(this);
+        this.getConnected = this.getConnected.bind(this);
     }
 
     state = {
@@ -32,16 +31,17 @@ class App extends Component {
                 pseudo: props.pseudo,
             }
         );
+        this.setMessage({severity: 'success', summary: 'Pseudo seted', detail: 'you are connected'});
     };
 
 
     //CONNECTION MANAGEMENT
 
-    getPseudo = () => {
+    getPseudo() {
         return this.state.pseudo;
     };
 
-    getConnected = () => {
+    getConnected() {
         return this.state.connected;
     };
 
@@ -50,18 +50,6 @@ class App extends Component {
 
     setMessage(message) {
         console.log(message);
-        if (this.messages) {
-            this.messages.show({
-                severity: message.severity,
-                summary: message.summary,
-                detail: message.errorDetail
-            });
-        }
-    };
-
-    getMessage = () => {
-        console.log(this.messages);
-        return this.messages;
     };
 
 
@@ -72,9 +60,13 @@ class App extends Component {
                     <div>
                         <Menu getConnected={this.getConnected()} getPseudo={this.getPseudo} setPseudo={this.setPseudo}
                               setMessage={this.setMessage}/>
-                        <Messages ref={(el) => this.getMessage = el}/>
-                        <Route exact path="/" component={Home}/>
-                        <Route exact path="/salons" component={Salons}/>
+                        <Route exact path="/" component={Home} />
+                        <Route path="/salons" render={() =>
+                            <Salons
+                                getConnected={ this.getConnected}
+                                getPseudo={this.getPseudo}/>
+                        }>
+                        </Route>
                         <Route path="/about" component={About}/>
                         <Route path="/topLadder" component={TopLadder}/>
                     </div>

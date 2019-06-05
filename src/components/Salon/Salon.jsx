@@ -1,16 +1,21 @@
 import React from 'react';
 import './Salon.css';
+import {Button} from "react-bootstrap";
 
 
-export default class Salon extends React.Component {
-    render() {
-        console.log(this);
-        return <li className="salon">
-            <div>
-                <p>{this.props.salon.name}</p>
-                <button className="btn btn-danger" onClick={this.props.deleteSalon}>Delete</button>
-            </div>
-        </li>
-    }
+export default function Salon(props) {
 
+    return <tr key={props.salon.id}>
+            <td>{props.salon.id}</td>
+            <td>{props.salon.name}</td>
+            <td/>
+            <td/>
+            <td>
+                {
+                    props && props.getConnected() && <Button variant="info" className="mr-2"
+                                                             onClick={() => props.joinSalon(props.salon.id)}>Join</Button>
+                }
+                <Button variant="danger">Delete</Button>
+            </td>
+        </tr>
 }

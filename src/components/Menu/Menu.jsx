@@ -1,31 +1,46 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import './Menu.css';
-import {OverlayPanel} from 'primereact/overlaypanel';
 import {InputText} from 'primereact/inputtext';
 import {Button} from 'primereact/button';
+import {Modal} from 'react-bootstrap';
 
 
 export default class Menu extends Component {
+
+
+    constructor(props, context) {
+        super(props, context);
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+    }
+
     state = {
+        show: false,
         newPseudo: '',
     };
 
+    handleClose() {
+        this.setState({show: false});
+    }
+
+    handleShow() {
+        this.setState({show: true});
+    }
+
+
     setPseudo = () => {
+        this.handleClose();
         this.props.setPseudo(
             {
                 connected: true,
                 pseudo: this.state.newPseudo,
             }
         );
-        this.props.setMessage({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'registered on the server'
-        });
     };
 
     disconnect = () => {
+        this.handleClose();
         this.props.setPseudo(
             {
                 connected: false,
@@ -43,10 +58,8 @@ export default class Menu extends Component {
                     <label htmlFor="cb1" className="p-checkbox-label">Pseudo</label>
                     <InputText id="cb1" className="m-2" id="newPseudo" value={this.state.newPseudo}
                                onChange={(e) => this.setState({newPseudo: e.target.value})}/>
-                    <div className="rm-2">
-                        <Button id="button-pseudo" className="btn btn-primary" label="Validate"
-                                onClick={this.setPseudo}/>
-                    </div>
+                    <Button id="button-pseudo" className="btn btn-primary" label="Validate"
+                            onClick={this.setPseudo}/>
                 </form>
             </div>
         } else {
@@ -71,11 +84,16 @@ export default class Menu extends Component {
                     <Link className="link" to="/topLadder">Top Ladder</Link>
                 </div>
                 <div className="flex-large">
-                    <a className="link" onClick={(e) => this.op.toggle(e)}>{this.props.getPseudo()}</a>
+                    <a className="link" onClick={this.handleShow}>{this.props.getPseudo()}</a>
                 </div>
-                <OverlayPanel className="ui-g-8" ref={(el) => this.op = el} showCloseIcon={false} dismissable={true}>
-                    {this.displayConnectionBtn()}
-                </OverlayPanel>
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        Login / Logout
+                    </Modal.Header>
+                    <Modal.Body>
+                        {this.displayConnectionBtn()}
+                    </Modal.Body>
+                </Modal>
             </div>
         )
     }

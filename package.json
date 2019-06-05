@@ -4,16 +4,19 @@
   "private": true,
   "dependencies": {
     "axios": "^0.19.0",
-    "bootstrap": "^4.1.1",
+    "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
     "primeicons": "^1.0.0",
     "primereact": "^3.1.4",
-    "react": "^16.8.6",
-    "react-create": "^1.0.2",
-    "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.1",
-    "react-transition-group": "^1.2.1"
+    "react": "latest",
+    "react-bootstrap": "latest",
+    "react-create": "latest",
+    "react-dom": "latest",
+    "react-router-dom": "latest",
+    "react-scripts": "latest",
+    "react-transition-group": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
