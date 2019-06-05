@@ -6,10 +6,15 @@ export default class Salons extends Component {
 
     state = {
         salons: [],
+        actualSalon: undefined,
     };
 
     componentDidMount() {
-        axios.get('')
+        this.refreshSalons();
+    }
+
+    refreshSalons(){
+        axios.get('http://192.168.0.33:8080/salons/getAllSalons')
             .then(response => {
                 console.log(response);
                 this.setState(
@@ -21,10 +26,19 @@ export default class Salons extends Component {
             .catch(function (error) {
                 console.log(error);
             });
+        console.log(this.state.salons)
     }
 
+    joinSalon  = props => {
+        this.setState(
+            {
+                actualSalon: props.actualSalon,
+            }
+        )
+    };
+
     displaySalon = () => {
-        return this.state.salons.map(salon => <Salon prop={salon}></Salon>)
+        return this.state.salons.map(salon => <Salon key={salon.name} salon={salon}/>)
     };
 
     render() {
